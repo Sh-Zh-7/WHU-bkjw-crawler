@@ -6,7 +6,7 @@ __email__ = "2431297348@qq.com"
 import requests
 import argparse
 
-from crawler import utils
+from login import utils
 
 # 各种资源的url
 url_prefix = "http://bkjw.whu.edu.cn/"
