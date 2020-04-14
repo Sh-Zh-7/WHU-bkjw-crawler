@@ -6,7 +6,7 @@ __email__ = "2431297348@qq.com"
 import requests
 import argparse
 
-import utils
+from crawler import utils
 
 # 各种资源的url
 url_prefix = "http://bkjw.whu.edu.cn/"
@@ -14,8 +14,8 @@ url_image = url_prefix + "servlet/GenImg"
 url_login = url_prefix + "servlet/Login"
 
 # 配置文件路径
-captcha_path = "./captcha.json"
-login_path = "./login.json"
+captcha_path = "../config/captcha.json"
+login_path = "../config/login.json"
 
 # 全局变量
 session = requests.session()
