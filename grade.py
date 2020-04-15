@@ -21,17 +21,16 @@ class Lesson:
         self.name = data[0].get_text().strip()
         self.point = data[4].get_text().strip()
         self.grade = data[10].get_text().strip()
-        self.grade_point = GPMap(float(self.grade))
+        if self.grade:
+            self.grade_point = str(GPMap(float(self.grade)))
+        else:
+            self.grade_point = ""
 
     def __str__(self):
         return "课程名: " + self.name + "\n" + \
                "学分: " + self.point + "\n" + \
                "成绩: " + self.grade + "\n" + \
-               "绩点: " + str(self.grade_point)
-
-# class LessonArray:
-#     def __init__(self, rows):
-#         for row in rows:
+               "绩点: " + self.grade_point
 
 
 def GetGradePageUrl(csrf_token):
@@ -62,8 +61,19 @@ def SelectByCname(soup, target_name):
             if lesson_name_text == target_name:
                 return Lesson(row)
 
-# def SelectAll(soup):
-#     table_rows = soup.select("body > table > tbody > tr")
+
+def SelectAll(soup):
+    table_rows = soup.select("body > table > tr")
+    gps, points = [], []
+    for index, row in enumerate(table_rows):
+        # 跳过首行
+        if index != 0:
+            tmp_lesson = Lesson(row)
+            print(tmp_lesson)
+            if tmp_lesson.grade != "":
+                gps.append(float(tmp_lesson.grade_point))
+                points.append(float(tmp_lesson.point))
+    return GPACalculator(gps, points)
 
 
 def GPMap(grade):
@@ -88,11 +98,11 @@ def GPMap(grade):
     return gp
 
 
-def GPACalculator(grades):
-    gps = []
-    for grade in grades:
-        gps.append(GPMap(grade))
-    return sum(gps) / len(gps)
+def GPACalculator(gps, points):
+    tmp = []
+    for gp, point in zip(gps, points):
+        tmp.append(gp * point)
+    return sum(tmp) / sum(points)
 
 
 if __name__ == "__main__":
@@ -105,11 +115,13 @@ if __name__ == "__main__":
         content = f.read()
 
     soup = bs(content, "lxml")
-    lesson = SelectByCname(soup, "NMSL")
-    if lesson:
-        print(lesson)
-    else:
-        print("很抱歉！没有找到相应的课程！")
+    # lesson = SelectByCname(soup, "NMSL")
+    # if lesson:
+    #     print(lesson)
+    # else:
+    #     print("很抱歉！没有找到相应的课程！")
+
+    # print(SelectAll(soup))
 
 
 
