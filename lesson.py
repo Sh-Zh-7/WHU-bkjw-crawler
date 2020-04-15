@@ -5,6 +5,7 @@ class Lesson:
         self.name = data[0].get_text().strip()
         self.point = data[4].get_text().strip()
         self.grade = data[10].get_text().strip()
+        self.year = data[8].get_text().strip()
         if self.grade:
             self.grade_point = str(GPMap(float(self.grade)))
         else:
@@ -18,14 +19,20 @@ class Lesson:
 
 
 class LessonArray:
-    def __init__(self, rows):
-        self.lessons = []
-        is_first = True
-        for row in rows:
-            if not is_first:
-                self.lessons.append(Lesson(row))
-            else:
-                is_first = False
+    def __init__(self, rows=None, lesson_list=None):
+        if rows:
+            self.lessons = []
+            is_first = True
+            for row in rows:
+                if not is_first:
+                    self.lessons.append(Lesson(row))
+                else:
+                    is_first = False
+        elif lesson_list:
+            self.lessons = lesson_list
+        else:
+            # TODO: 做点修改
+            print("Error")
 
     def __str__(self):
         length = len(self.lessons)

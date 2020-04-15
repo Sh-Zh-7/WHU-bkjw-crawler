@@ -46,9 +46,11 @@ if __name__ == "__main__":
 
     soup = bs(content, "lxml")
 
-    lesson = Query.SelectByCname(soup, "数据结构")
-    print(lesson)
+    # lesson = Query.SelectByCname(soup, "数据结构")
+    # print(lesson)
 
     # lessons = Query.SelectAll(soup)
     # print(lessons.GetAverageScore())
 
+    lessons = Query.SelectByYear(soup, "2019")
+    print(lessons.GetAverageScore())
