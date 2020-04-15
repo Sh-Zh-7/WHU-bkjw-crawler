@@ -1,11 +1,6 @@
-__author__ = "Sh-Zh-7"
-__copyright__ = "Copyright (C) 2019 Sh-Zh-7"
-__license__ = "MIT"
-__email__ = "2431297348@qq.com"
-
 import requests
-import argparse
 import cv2 as cv
+from bs4 import BeautifulSoup as bs
 
 import utils
 
@@ -19,17 +14,21 @@ url_index = url_home + "stu/stu_index.jsp"
 session = requests.session()
 header = {"User-Agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36'}
 
+
 def GetCAPTCHA(session=session, url=url_image):
-    # 设置一个User-Agent, 伪装成浏览器了
-    captcha = session.get(url=url, headers=header, stream=True)
-    img_arr = utils.Bin2Img(captcha.content)
-    cv.imshow("title", img_arr)
+    # 设置一个User-Agent, 伪装成浏览器
+    # 这是第一次访问, 所以要记录cookies
+    response = session.get(url=url, headers=header, stream=True)
+    captcha = response.content
+    cookie = response.cookies
+    # 转化成图片并展示
+    image = utils.Bin2Img(captcha)
+    cv.imshow("title", image)
     cv.waitKey(0)
-    # 只要访问了host, 就会给你一个cookies, 不用登录教务系统主页
-    return img_arr, captcha.cookies
+    return image, cookie
 
 
-def Login(user, password, xdvbf, cookie, session=session, url=url_login):
+def SendPost(user, password, xdvbf, cookie, session=session, url=url_login):
     form_data = {
         "timestamp": utils.GetTimeStamp(),
         "jwb": utils.GetWHUEncode(),
@@ -40,26 +39,28 @@ def Login(user, password, xdvbf, cookie, session=session, url=url_login):
     return session.post(url, form_data, headers=header,
                         cookies=requests.utils.dict_from_cookiejar(cookie))
 
+def GetTokenAndCookie(cookie, session=session, url=url_index):
+    result = session.get(url, headers=header, cookie=cookie)
+    csrf_token =
 
-def GetArgs():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-u", "--uid", type=str, default="", help="您的学号")
-    parser.add_argument("-p", "--password", type=str, default="", help="您的密码")
-    args = parser.parse_args()
-    return args
 
-def Main():
-    user = "2018302080181"
-    pwd = "20000721"
+def Login(user, pwd):
     # 获取验证码
     image, cookie = GetCAPTCHA(session, url_image)
+    # TODO: 给用户更多的选择
     captcha_content = input("请输入验证码: ")
+
     # 将密码加密后登录
     encrypted_pwd = utils.EncryptPassword(pwd)
-    print(captcha_content)
-    login = Login(user, encrypted_pwd, captcha_content, cookie)
+    login = SendPost(user, encrypted_pwd, captcha_content, cookie)
     print(login.url)
+
+    # 获取csrf_token和的登录后的cookie并返回
+    login_cookie = login.cookies
+    return GetTokenAndCookie(cookie=login_cookie)
 
 
 if __name__ == "__main__":
-    Main()
+    user = "2018302080181"
+    password = "20000721"
+    Login(user, password)
