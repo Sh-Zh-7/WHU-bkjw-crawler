@@ -3,9 +3,12 @@
   "Accept-Encoding": "gzip, deflate",
   "Accept-Language": "zh-CN,zh;q=0.9",
   "Cache-Control": "max-age=0",
-  "Cookie": "userLanguage=zh-CN; JSESSIONID=E2794285D87E043EA7650FD80690BFD3",
+  "Content-Length": "213",
+  "Content-Type": "application/x-www-form-urlencoded",
   "Host": "bkjw.whu.edu.cn",
+  "Origin": "http://bkjw.whu.edu.cn",
   "Proxy-Connection": "keep-alive",
+  "Referer": "http://bkjw.whu.edu.cn/servlet/_7052447",
   "Upgrade-Insecure-Requests": "1",
   "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
 }
