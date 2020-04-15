@@ -7,8 +7,12 @@ import argparse
 
 def GetArgs():
     parser = argparse.ArgumentParser()
+    # TODO: 加上持久化root和password
     parser.add_argument("-u", "--uid", type=str, default="", help="您的学号")
     parser.add_argument("-p", "--password", type=str, default="", help="您的密码")
     parser.add_argument("-d", "-disable-auto", help="加上这个参数后，手动进行验证码的识别")
     args = parser.parse_args()
     return args
+
+# def Main(args):
+
