@@ -2,9 +2,8 @@ import requests
 import datetime
 from bs4 import BeautifulSoup as bs
 
-import login
-from query import Query
-import utils
+from dao.query import Query
+from connect import helper
 
 # 建立int类型的星期到字符串的映射
 week_map = {0: 'Mon', 1: 'Tue', 2: 'Wed', 3: 'Thu', 4: 'Fri', 5: 'Sat', 6: 'Sun'}
@@ -30,7 +29,7 @@ def GetGradePageUrl(csrf_token):
 
 def GetGradePageContent(session, cookie, csrf_token):
     target_url = GetGradePageUrl(csrf_token)
-    response = session.get(target_url, headers=utils.header, cookies=requests.utils.dict_from_cookiejar(cookie))
+    response = session.get(target_url, headers=helper.header, cookies=requests.utils.dict_from_cookiejar(cookie))
     response.encoding = response.apparent_encoding  # 推断出编码方式
     return response.text
 

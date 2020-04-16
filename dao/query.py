@@ -1,4 +1,4 @@
-from lesson import LessonArray
+from dao.lesson import LessonArray
 
 class Query:
     @staticmethod

@@ -1,14 +1,14 @@
 import requests
 from bs4 import BeautifulSoup as bs
 
-import utils
+from connect import helper
 
 class URL:
     # 静态代码块
     home = "http://bkjw.whu.edu.cn/"
     # 获得首页的内容
     __session = requests.session()
-    __request = __session.get(home, headers=utils.header)
+    __request = __session.get(home, headers=helper.header)
     __home_page_content = __request.text
     # 爬取验证码和表单验证的uri
     __soup = bs(__home_page_content, "html.parser")
