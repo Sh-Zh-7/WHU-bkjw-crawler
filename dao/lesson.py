@@ -97,6 +97,8 @@ def GPMap(grade):
         gp = 3.0
     elif grade >= 75.0:
         gp = 2.7
+    elif grade >= 72.0:
+        gp = 2.3
     elif grade >= 68.0:
         gp = 2.0
     elif grade >= 64.0:
