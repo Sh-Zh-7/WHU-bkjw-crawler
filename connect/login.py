@@ -8,8 +8,8 @@ from connect.captcha import *
 
 def SendPost(user, password, xdvbf, cookie, session, url=URL.form):
     form_data = {
-        "timestamp": helper.GetTimeStamp(),
-        "jwb": helper.GetWHUEncode(),
+        "timestamp": helper.time_stamp,
+        "jwb": helper.jwb,
         "id": user,
         "pwd": password,
         "xdvfb": xdvbf
