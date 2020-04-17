@@ -1,3 +1,5 @@
+from connect.helper import HTML2CSV
+
 __author__ = "Sh-Zh-7"
 __copyright__ = "Copyright (C) 2019 Sh-Zh-7"
 __license__ = "MIT"
@@ -6,12 +8,18 @@ __email__ = "2431297348@qq.com"
 import os
 import json
 import getpass
+import requests
 import argparse
 from bs4 import BeautifulSoup as bs
+
+# 禁止TF打印任何日志信息
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 from dao.query import Query
 from connect import login
 from connect.grade import GetGradePageContent
+from captcha import other
+from captcha.recognize import RecognizeCAPTCHA
 
 
 def ShowLessonInfo(lessons, args):
@@ -24,7 +32,7 @@ def ShowLessonInfo(lessons, args):
 def GetArgs():
     parser = argparse.ArgumentParser(description="您的教务系统助手", epilog="Author: WHU CS 2018级 沈之豪")
     # 登录部分
-    # parser.add_argument("-d", "-disable-auto", help="加上这个参数后，自动进行验证码的识别")
+    parser.add_argument("-d", action="store_true", help="加上这个参数后，禁止验证码的自动识别")
 
     # 按照不同的需求查找
     parser.add_argument("-Y", type=str, default=0, help="查询某一学年的课程")
@@ -60,6 +68,17 @@ def GetUsernameAndPwd():
     return username, password
 
 
+def GetCAPTCHA(session, disabled):
+    target_captcha, cookie = other.GetCAPTCHA(session)
+    if disabled:
+        print("请根据显示的图片输入对应的验证码(关闭图片后输入)\n")
+        other.ShowCAPTCHA(target_captcha)
+        captcha = input("请输入验证码")
+    else:
+        captcha = RecognizeCAPTCHA(target_captcha)
+    return captcha, cookie
+
+
 def Core(args):
     with open("./grades_table.html", "r", encoding="GBK") as f:
         content = f.read()
@@ -85,14 +104,20 @@ def Main(args):
             os.remove("./grades_table.html")
         if os.path.exists("./user_info.json"):
             os.remove("./user_info.json")
-        exit(0)
+        if os.path.exists("./grades_table.csv"):
+            os.remove("./grades_table.csv")
     else:
         if not os.path.exists("./grades_table.html"):
+            session = requests.session()
+
             username, password = GetUsernameAndPwd()
-            session, cookie, csrf_token = login.Login(username, password)
-            content = GetGradePageContent(session, cookie, csrf_token)
+            captcha, cookie = GetCAPTCHA(session, args.d)
+
+            login_cookie, csrf_token = login.Login(session, username, password, captcha, cookie)
+            content = GetGradePageContent(session, login_cookie, csrf_token)
             with open("grades_table.html", "w", encoding="GBK") as f:
                 f.write(content)
+            HTML2CSV(content)
         Core(args)
 
 
