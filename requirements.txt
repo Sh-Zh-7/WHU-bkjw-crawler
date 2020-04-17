@@ -1,0 +1,6 @@
+requests
+imutils
+beautifulsoup4
+opencv-python
+matplotlib
+tensorflow
