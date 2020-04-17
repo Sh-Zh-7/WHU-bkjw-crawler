@@ -4,6 +4,8 @@ class Lesson:
         # 为什么这里不用Pandas? 因为效率
         data = row.select("td")
         self.name = data[0].get_text().strip()
+        self.kind = data[1].get_text().strip()
+        self.college = data[6].get_text().strip()
         self.point = data[4].get_text().strip()
         self.grade = data[10].get_text().strip()
         self.year = data[8].get_text().strip()
@@ -31,22 +33,35 @@ class LessonArray:
                     is_first = False
         elif lesson_list:
             self.lessons = lesson_list
-        else:
-            print("Error")
 
     def __str__(self):
-        length = len(self.lessons)
-        for index, lesson in enumerate(self.lessons):
-            print(lesson)
-            if index != length - 1:
-                print()
+        target_str = ""
+        for lesson in self.lessons:
+            target_str += (lesson.__str__() + "\n")
+        return target_str
 
     def GetLessonsList(self):
         return self.lessons
 
+    def GetTotalPoint(self):
+        total_point = 0
+        for lesson in self.lessons:
+            total_point += lesson.point
+        return total_point
+
+    def GetAverageScore(self):
+        score_arr = []
+        for lesson in self.lessons:
+            if lesson.grade:
+                score_arr.append(float(lesson.grade))
+        try:
+            return sum(score_arr) / len(score_arr)
+        except:
+            print("未能查询到课程，请检查查询是否正确")
+            exit(0)
+
     def GetGPA(self):
-        gp_arr = []
-        point_arr = []
+        gp_arr, point_arr = [], []
         for lesson in self.lessons:
             point = lesson.point
             gp = lesson.grade_point
@@ -59,16 +74,16 @@ class LessonArray:
             print("查询到的学分为0，请检查查询是否正确")
             exit(0)
 
-    def GetAverageScore(self):
-        score_arr = []
+    def GetWeightedScore(self):
+        total_arr, point_arr = [], []
         for lesson in self.lessons:
             if lesson.grade:
-                score_arr.append(float(lesson.grade))
+                total_arr.append(float(lesson.grade) * float(lesson.point))
+                point_arr.append(float(lesson.point))
         try:
-            return sum(score_arr) / len(score_arr)
+            return sum(total_arr) / sum(point_arr)
         except:
-            print("未能查询到课程，请检查查询是否正确")
-            exit(0)
+            print("未能查询到相应的课程，请检查查询是否正确")
 
 
 def GPMap(grade):
