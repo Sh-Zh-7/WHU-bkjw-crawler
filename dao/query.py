@@ -10,9 +10,11 @@ class Query:
     @staticmethod
     def SelectByCname(lessons, cname):
         lessons_list = lessons.GetLessonsList()
+        target_lessons = []
         for lesson in lessons_list:
-            if lesson.name == cname:
-                return lesson
+            if cname in lesson.name:
+                target_lessons.append(lesson)
+        return LessonArray(lesson_list=target_lessons)
 
     # 根据年份查询课程(奖学金用)
     @staticmethod
