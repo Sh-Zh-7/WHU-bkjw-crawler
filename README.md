@@ -1,6 +1,6 @@
 # 武汉大学-本科教务-爬虫
 
-![](https://img.shields.io/github/license/Sh-Zh-7/WHU-bkjw-crawler)![](https://img.shields.io/github/repo-size/Sh-Zh-7/WHU-bkjw-crawler)![](https://img.shields.io/badge/tensroflow-2.1.0-red)
+![](https://img.shields.io/github/license/Sh-Zh-7/WHU-bkjw-crawler) ![](https://img.shields.io/github/repo-size/Sh-Zh-7/WHU-bkjw-crawler) ![](https://img.shields.io/badge/tensroflow-2.1.0-red)
 
 一个用来爬取教务系统成绩单并能进行灵活处理的教务系统爬虫程序
 
@@ -24,7 +24,8 @@
 
 `pip install -r requirements.txt`
 
-如果您是Windows 10的用户，由于目前最新的python解释器对tensorflow 2.0+的支持问题，您可能得使用3.5.x或者3.6.x版本的python解释器才能正常下载tensorflow 2.0+的依赖。
+如果您是Windows 10的用户，由于目前最新的python解释器对tensorflow 2.0+的支持问题，您可能得使用3.5.x或者3.6.x版本的python解释器才能正常下载tensorflow 2.0+的依赖。<br/>
+另外, 由于tensorflow这个库比较庞大，加之国内的网络问题，下载可能需要很长时间，这里建议使用VPN。
 
 ## 使用：
 
