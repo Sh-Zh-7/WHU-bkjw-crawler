@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup as bs
 
 from connect import helper
 from connect.url import URL
-from connect.captcha import *
 
 
 def SendPost(user, password, xdvbf, cookie, session, url=URL.form):
@@ -18,19 +17,6 @@ def SendPost(user, password, xdvbf, cookie, session, url=URL.form):
                             cookies=requests.utils.dict_from_cookiejar(cookie))
     response.encoding = response.apparent_encoding
     return response
-
-
-def GetCAPTCHA(session, url=URL.captcha):
-    # 设置一个User-Agent, 伪装成浏览器
-    # 这是第一次访问, 所以要记录cookies
-    response = session.get(url=url, headers=helper.header, stream=True)
-    captcha = response.content
-    cookie = response.cookies
-    # 转化成图片并展示
-    image = Bin2Img(captcha)
-    cv.imshow("title", image)
-    cv.waitKey(0)
-    return image, cookie
 
 
 def GetCSRF(text):
@@ -51,20 +37,15 @@ def GetToken(cookie, session, url=URL.index):
     return csrf_token
 
 
-def Login(user, pwd):
-    session = requests.session()
+def Login(session, user, pwd, captcha, cookie):
     try:
-        # 获取验证码
-        image, cookie = GetCAPTCHA(session, URL.captcha)
-        captcha_content = input("请输入验证码: ")
-        print()
         # 将密码加密后登录
         encrypted_pwd = helper.EncryptPassword(pwd)
-        login = SendPost(user, encrypted_pwd, captcha_content, cookie, session=session)
+        login = SendPost(user, encrypted_pwd, captcha, cookie, session=session)
         if login.url == URL.success:
             # 获取csrf_token和的登录后的cookie并返回
             login_cookie = login.cookies
-            return session, login_cookie, GetToken(login_cookie, session=session)
+            return login_cookie, GetToken(login_cookie, session=session)
         else:
             print("登录失败!")
             failed_content = login.text
@@ -85,6 +66,3 @@ e.g.
     Login(user, password)
     print("登录成功") 
 """
-
-
-

@@ -23,10 +23,10 @@ def GetPrediction(model, image):
         os.makedirs(tmp)
     image = image.convert("L")
     twoValue(image, 100)
-    clearNoise(image, 1, 1)
-    image = saveImage(image.size)
-    x, y = cfs(image)
-    saveSmall(tmp, image, x)
+    ClearNoise(image, 1, 1)
+    image = SaveImage(image.size)
+    x, y = CFS(image)
+    SaveSmall(tmp, image, x)
     for image_file in tmp_image_list:
         # Load the image and convert it to grayscale
         image = cv2.imread(image_file)
@@ -60,9 +60,4 @@ def RecognizeCAPTCHA(captcha):
     model = tf.keras.models.load_model("./captcha/model.h5")
     result = GetPrediction(model, captcha)
     return result
-
-
-if __name__ == "__main__":
-    src = Image.open("./img/test.jpeg")
-    print(RecognizeCAPTCHA(src))
 

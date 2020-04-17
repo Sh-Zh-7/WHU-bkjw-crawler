@@ -1,6 +1,7 @@
 # 根据tr转化为Lesson对象
 class Lesson:
     def __init__(self, row):
+        # 为什么这里不用Pandas? 因为效率
         data = row.select("td")
         self.name = data[0].get_text().strip()
         self.point = data[4].get_text().strip()
@@ -14,16 +15,16 @@ class Lesson:
     def __str__(self):
         return "课程名: " + self.name + "\n" + \
                "学分: " + self.point + "\n" + \
-               "成绩: " + self.grade + "\n" + \
-               "绩点: " + self.grade_point
+               "成绩: " + (self.grade if self.grade else "None") + "\n" + \
+               "绩点: " + (self.grade_point if self.grade_point else "None") + "\n"
 
 
 class LessonArray:
-    def __init__(self, rows=None, lesson_list=None):
-        if rows:
+    def __init__(self, table=None, lesson_list=None):
+        if table:
             self.lessons = []
             is_first = True
-            for row in rows:
+            for row in table:
                 if not is_first:
                     self.lessons.append(Lesson(row))
                 else:
@@ -31,7 +32,6 @@ class LessonArray:
         elif lesson_list:
             self.lessons = lesson_list
         else:
-            # TODO: 做点修改
             print("Error")
 
     def __str__(self):
@@ -53,16 +53,22 @@ class LessonArray:
             if gp:
                 gp_arr.append(float(point) * float(gp))
                 point_arr.append(float(point))
-        # TODO: 增加鲁棒性
-        return sum(gp_arr) / sum(point_arr)
+        try:
+            return sum(gp_arr) / sum(point_arr)
+        except:
+            print("查询到的学分为0，请检查查询是否正确")
+            exit(0)
 
     def GetAverageScore(self):
         score_arr = []
         for lesson in self.lessons:
             if lesson.grade:
                 score_arr.append(float(lesson.grade))
-        # TODO: 增加鲁棒性
-        return sum(score_arr) / len(score_arr)
+        try:
+            return sum(score_arr) / len(score_arr)
+        except:
+            print("未能查询到课程，请检查查询是否正确")
+            exit(0)
 
 
 def GPMap(grade):

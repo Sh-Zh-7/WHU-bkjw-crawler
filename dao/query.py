@@ -30,4 +30,3 @@ class Query:
             if lesson.year == year:
                 target_lesson.append(lesson)
         return LessonArray(lesson_list=target_lesson)
-

@@ -9,7 +9,7 @@ a = [0, 1, 2, 3]
 t2val = {}
 
 
-def cfs(img):
+def CFS(img):
     pix_data = img.load()
     w, h = img.size
     visited = set()
@@ -48,7 +48,7 @@ def cfs(img):
     return x_cuts, y_cuts
 
 
-def clearNoise(image, N, Z):
+def ClearNoise(image, N, Z):
     for i in range(0, Z):
         t2val[(0, 0)] = 1
         t2val[(image.size[0] - 1, image.size[1] - 1)] = 1
@@ -78,7 +78,7 @@ def clearNoise(image, N, Z):
                     t2val[(x, y)] = 1
 
 
-def saveSmall(SaveDir, img, x_cuts):
+def SaveSmall(SaveDir, img, x_cuts):
     if not os.path.exists("./" + SaveDir):
         os.makedirs("./" + SaveDir)
     for j, item in enumerate(x_cuts):
@@ -98,7 +98,7 @@ def twoValue(image, G):
                 t2val[(x, y)] = 0
 
 
-def saveImage(size):
+def SaveImage(size):
     image = Image.new("1", size)
     draw = ImageDraw.Draw(image)
     for x in range(0, size[0]):
