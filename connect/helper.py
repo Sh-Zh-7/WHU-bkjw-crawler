@@ -18,7 +18,7 @@ def EncryptPassword(pwd):
     return encrypt.hexdigest()
 
 def HTML2CSV(html):
-    soup = bs(html, "lxml")
+    soup = bs(html, "html.parser")
     trs = soup.find_all("tr")
     with open("grades_table.csv", "w") as csv_file:
         field_names = ["课程名称", "课程类型", "通识课类型", "课程属性", "学分", "教师",

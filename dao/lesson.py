@@ -46,7 +46,7 @@ class LessonArray:
     def GetTotalPoint(self):
         total_point = 0
         for lesson in self.lessons:
-            total_point += lesson.point
+            total_point += float(lesson.point)
         return total_point
 
     def GetAverageScore(self):
