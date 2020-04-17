@@ -1,10 +1,10 @@
 import shutil
-import numpy as np
-from captcha.pretreatment import *
 
-from PIL import Image
+import numpy as np
 import tensorflow as tf
 from tensorflow.compat.v1 import InteractiveSession
+
+from captcha.pretreatment import *
 
 tmp = "tmp"
 predict_list = []

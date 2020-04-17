@@ -1,6 +1,3 @@
-from connect.helper import HTML2CSV
-from dao.lesson import LessonArray
-
 __author__ = "Sh-Zh-7"
 __copyright__ = "Copyright (C) 2019 Sh-Zh-7"
 __license__ = "MIT"
@@ -21,6 +18,8 @@ from connect import login
 from connect.grade import GetGradePageContent
 from captcha import other
 from captcha.recognize import RecognizeCAPTCHA
+from connect.helper import HTML2CSV
+from dao.lesson import LessonArray
 
 
 def ShowLessonInfo(lessons, args):
