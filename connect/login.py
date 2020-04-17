@@ -51,7 +51,10 @@ def Login(session, user, pwd, captcha, cookie):
             failed_content = login.text
             soup = bs(failed_content, "html.parser")
             reason = soup.select("#loginInputBox > tr:nth-child(4) > td > font")[0].get_text()
-            print(reason)
+            if "验证码" in reason:
+                print("自动登录时碰到验证码错误，请重试!")
+            else:
+                print(reason)
             exit(1)
     except:
         print("未知的异常！请联系开发人员!")
