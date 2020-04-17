@@ -3,4 +3,4 @@ imutils
 beautifulsoup4
 opencv-python
 matplotlib
-tensorflow
+tensorflow=2.1.0
