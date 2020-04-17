@@ -13,7 +13,9 @@ class URL:
     # 爬取验证码和表单验证的uri
     __soup = bs(__home_page_content, "html.parser")
     __form_servlet = __soup.select("#loginBox > form")[0].get("action")
-    __captcha_servlet = __soup.select("#loginInputBox > tr:nth-child(3) > td:nth-child(2) > div:nth-child(2) > img")[1].get("src")
+    __img_list__ = __soup.select("#loginInputBox > tr:nth-child(3) > td:nth-child(2) > div:nth-child(2)")[0]
+    __target_img__ = __img_list__.find("img", attrs={"name": "sleep"})
+    __captcha_servlet = __target_img__.get("src")
 
     prefix = home[:-1]
     # 具体的各个url
