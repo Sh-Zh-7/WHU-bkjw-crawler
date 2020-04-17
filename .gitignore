@@ -133,5 +133,6 @@ dmypy.json
 
 # Ignore test files
 grades_table.html
-grades_table.css
+grades_table.csv
 user_info.json
+test.py
