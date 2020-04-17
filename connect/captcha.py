@@ -5,24 +5,9 @@ from PIL import Image
 from io import BytesIO
 from matplotlib.pyplot import imread
 
-from connect.url import URL
-from connect import helper
-
 
 def Bin2Img(bin_obj):
     return imread(BytesIO(bin_obj), "jpeg")
-
-def GetCAPTCHA(session, url=URL.captcha):
-    # 设置一个User-Agent, 伪装成浏览器
-    # 这是第一次访问, 所以要记录cookies
-    response = session.get(url=url, headers=helper.header, stream=True)
-    captcha = response.content
-    cookie = response.cookies
-    # 转化成图片并展示
-    image = Bin2Img(captcha)
-    cv.imshow("title", image)
-    cv.waitKey(0)
-    return image, cookie
 
 
 def RecognizeCAPTCHA(img):

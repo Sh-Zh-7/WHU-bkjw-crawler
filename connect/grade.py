@@ -33,23 +33,3 @@ def GetGradePageContent(session, cookie, csrf_token):
     response.encoding = response.apparent_encoding  # 推断出编码方式
     return response.text
 
-
-if __name__ == "__main__":
-    # user = "2018302080181"
-    # password = "20000721"
-    # session, cookie, csrf_token = login.Login(user, password)
-    # content = GetGradePageContent(session, cookie, csrf_token)
-
-    with open("content.html", "r", encoding="GBK") as f:
-        content = f.read()
-
-    soup = bs(content, "lxml")
-
-    # lesson = Query.SelectByCname(soup, "数据结构")
-    # print(lesson)
-
-    # lessons = Query.SelectAll(soup)
-    # print(lessons.GetAverageScore())
-
-    lessons = Query.SelectByYear(soup, "2019")
-    print(lessons.GetAverageScore())
