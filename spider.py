@@ -8,7 +8,11 @@ import json
 import getpass
 import argparse
 from bs4 import BeautifulSoup as bs
+
 from dao.query import Query
+from connect import login
+from connect.grade import GetGradePageContent
+
 
 def ShowLessonInfo(lessons, args):
     if args.P:
@@ -20,8 +24,6 @@ def ShowLessonInfo(lessons, args):
 def GetArgs():
     parser = argparse.ArgumentParser(description="您的教务系统助手", epilog="Author: WHU CS 2018级 沈之豪")
     # 登录部分
-    parser.add_argument("-u", type=str, default="", help="您的学号")
-    parser.add_argument("-p", type=str, default="", help="您的密码")
     # parser.add_argument("-d", "-disable-auto", help="加上这个参数后，自动进行验证码的识别")
 
     # 按照不同的需求查找
@@ -38,24 +40,6 @@ def GetArgs():
 
     args = parser.parse_args()
     return args
-
-def Core(args):
-    with open("./grades_table.html", "r", encoding="GBK") as f:
-        content = f.read()
-    soup = bs(content, "lxml")
-    if args.C:
-        lesson_name = args.C.strip()
-        lesson = Query.SelectByCname(soup, lesson_name)
-        print(lesson)
-    elif args.A:
-        lessons = Query.SelectAll(soup)
-        ShowLessonInfo(lessons, args)
-    elif args.Y:
-        year = args.Y.strip()
-        lessons = Query.SelectByYear(soup, year)
-        ShowLessonInfo(lessons, args)
-    else:
-        print("不明确的组合！请查阅官方文档！")
 
 
 def GetUsernameAndPwd():
@@ -76,6 +60,25 @@ def GetUsernameAndPwd():
     return username, password
 
 
+def Core(args):
+    with open("./grades_table.html", "r", encoding="GBK") as f:
+        content = f.read()
+    soup = bs(content, "lxml")
+    if args.C:
+        lesson_name = args.C.strip()
+        lesson = Query.SelectByCname(soup, lesson_name)
+        print(lesson)
+    elif args.A:
+        lessons = Query.SelectAll(soup)
+        ShowLessonInfo(lessons, args)
+    elif args.Y:
+        year = args.Y.strip()
+        lessons = Query.SelectByYear(soup, year)
+        ShowLessonInfo(lessons, args)
+    else:
+        print("不明确的组合！请查阅官方文档！")
+
+
 def Main(args):
     if args.clear:
         if os.path.exists("./grades_table.html"):
@@ -84,6 +87,12 @@ def Main(args):
             os.remove("./user_info.json")
         exit(0)
     else:
+        if not os.path.exists("./grades_table.html"):
+            username, password = GetUsernameAndPwd()
+            session, cookie, csrf_token = login.Login(username, password)
+            content = GetGradePageContent(session, cookie, csrf_token)
+            with open("grades_table.html", "w", encoding="GBK") as f:
+                f.write(content)
         Core(args)
 
 
