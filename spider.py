@@ -94,9 +94,12 @@ def Core(args):
     lessons = LessonArray(table_rows)
 
     if args.C:
-        lesson_name = args.C.strip()
-        lesson = Query.SelectByCname(lessons, lesson_name)
-        print(lesson)
+	    try:
+            lesson_name = args.C.strip()
+            lesson = Query.SelectByCname(lessons, lesson_name)
+            print(lesson)
+		except:
+		    print("未能查询到课程，请检查您的查询条件")
     elif args.K or args.Y or args.A:
         if args.K:
             kind = args.K.strip()
