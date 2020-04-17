@@ -89,17 +89,18 @@ def GetCAPTCHA(session):
 def Core(args):
     with open("./grades_table.html", "r", encoding="GBK") as f:
         content = f.read()
-    soup = bs(content, "lxml")
+    soup = bs(content, "html.parser")
     table_rows = soup.select("body > table > tr")
     lessons = LessonArray(table_rows)
 
     if args.C:
-	    try:
+        try:
             lesson_name = args.C.strip()
             lesson = Query.SelectByCname(lessons, lesson_name)
             print(lesson)
-		except:
-		    print("未能查询到课程，请检查您的查询条件")
+        except:
+            print("未能查询到课程，请检查您的查询条件")
+            exit(0)
     elif args.K or args.Y or args.A:
         if args.K:
             kind = args.K.strip()
