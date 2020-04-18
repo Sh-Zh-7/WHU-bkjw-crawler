@@ -20,11 +20,15 @@
 
 首先获取整个项目：
 
-`git clone git@github.com:Sh-Zh-7/WHU-bkjw-crawler.git`
+```
+git clone git@github.com:Sh-Zh-7/WHU-bkjw-crawler.git
+```
 
 再利用pip安装项目的依赖：
 
-`pip install -r requirements.txt`
+```
+pip install -r requirements.txt
+```
 
 如果您是Windows 10的用户，由于目前最新的python解释器对tensorflow 2.0+的支持问题，您可能得使用3.5.x或者3.6.x版本的python解释器才能正常下载tensorflow 2.0+的依赖。<br/>
 另外, 由于tensorflow这个库比较庞大，加之国内的网络问题，下载可能需要很长时间，这里建议使用VPN。
@@ -48,9 +52,16 @@ optional arguments:
   -G                    查询GPA
   -W                    查询以学分为权的平均分
   -T                    查询总学分
-  --print               打印所有课程信息
+  --print               打印选中课程信息
   --clear               删除所有本地存储
 ```
+其中，-K的各个选项分别代表着：
+- GB：公共必修课
+- GX：公共选修课
+- ZB：专业必修课
+- ZX：专业选修课
+- B:  所有必修课
+- X:  所有选修课
 
 下面展示比较常用的几种命令：
 
