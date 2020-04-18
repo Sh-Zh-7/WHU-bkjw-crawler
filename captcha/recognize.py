@@ -18,6 +18,12 @@ label_dic = {
 
 
 def GetPrediction(model, image):
+    """
+    利用训练好的模型和图像获得结果
+    :param model: 模型
+    :param image: 图片
+    :return: 验证码结果
+    """
     data = []
     if not os.path.exists(tmp):
         os.makedirs(tmp)
@@ -53,6 +59,11 @@ def GetPrediction(model, image):
 
 
 def RecognizeCAPTCHA(captcha):
+    """
+    暴露给Login的接口，这里就不能把model作为参数了
+    :param captcha: 验证码图片
+    :return: 验证码结果
+    """
     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True

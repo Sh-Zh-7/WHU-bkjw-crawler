@@ -1,3 +1,8 @@
+"""
+    课程对象和课程集对象
+    主要用来获得课程的信息（GPA等）
+"""
+
 # 根据tr转化为Lesson对象
 class Lesson:
     def __init__(self, row):

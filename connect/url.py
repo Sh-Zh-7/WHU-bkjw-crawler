@@ -1,3 +1,8 @@
+"""
+    根据教务系统首页的内容获取各种资源的URI
+    这样就不用担心servlet变来变去的情况
+"""
+
 import requests
 from bs4 import BeautifulSoup as bs
 

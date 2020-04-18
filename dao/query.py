@@ -1,3 +1,7 @@
+"""
+    查询符合条件的课程
+"""
+
 from dao.lesson import LessonArray
 
 gb_list = ["公共必修", "公共基础必修"]

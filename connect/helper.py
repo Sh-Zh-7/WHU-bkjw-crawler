@@ -3,21 +3,36 @@ import hashlib
 import csv
 from bs4 import BeautifulSoup as bs
 
+# 伪装成浏览器的核心要素
 header = {"User-Agent":
               'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
               'AppleWebKit/537.36 (KHTML, like Gecko) '
               'Chrome/78.0.3904.70 '
               'Safari/537.36'}
+# 时间戳，POST必备
 time_stamp = str(int(time.time() * 1000))
+# 这一段看上去很诡异，实际上是"武大本科教务系统"的URL编码
 jwb = "%E6%AD%A6%E5%A4%A7%E6%9C%AC%E7%A7%91%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F"
 
 
 def EncryptPassword(pwd):
+    """
+    从教务系统的首页看
+    其密码是经过MD5加密的
+    :param pwd: 未加密的密码
+    :return: 加密过后的密码
+    """
     encrypt = hashlib.md5()
     encrypt.update(pwd.encode("ASCII"))
     return encrypt.hexdigest()
 
 def HTML2CSV(html):
+    """
+    将HTML转化为CSV
+    这样当我们的提供的功能无法满足用户的需求时
+    用户可以自己借助CSV软件进行判断
+    :param html: HTML的内容
+    """
     soup = bs(html, "html.parser")
     trs = soup.find_all("tr")
     with open("grades_table.csv", "w") as csv_file:
