@@ -34,6 +34,8 @@ def ShowLessonInfo(lessons, args):
             print(lessons.GetTotalPoint())
         elif args.print:
             print(lessons)
+        else:
+            print("请输入您想查询的信息：GPA？平均分？加权平均分？总学分？")
     except:
         print("未能查询到课程，请检查您的查询条件")
 

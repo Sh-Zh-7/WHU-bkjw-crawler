@@ -1,8 +1,7 @@
-import requests
 import datetime
-from bs4 import BeautifulSoup as bs
 
-from dao.query import Query
+import requests
+
 from connect import helper
 
 # 建立int类型的星期到字符串的映射

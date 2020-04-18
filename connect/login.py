@@ -55,7 +55,6 @@ def Login(session, user, pwd, captcha, cookie):
                 print("自动登录时碰到验证码错误，请重试!")
             else:
                 print(reason)
-            exit(1)
     except:
         print("未知的异常！请联系开发人员!")
         exit(1)
