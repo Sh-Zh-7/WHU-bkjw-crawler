@@ -28,3 +28,4 @@ class URL:
     form = prefix + __form_servlet
     index = home + "stu/stu_index.jsp"
     success = home + "servlet/../stu/stu_index.jsp"
+

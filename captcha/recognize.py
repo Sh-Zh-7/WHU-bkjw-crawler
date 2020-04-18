@@ -72,3 +72,4 @@ def RecognizeCAPTCHA(captcha):
     result = GetPrediction(model, captcha)
     return result
 
+
