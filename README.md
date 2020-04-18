@@ -100,7 +100,7 @@ python spider.py -Y 2018 -K B -W
 
 ## 鸣谢：
 
-WHU 2018级本科 CS ， [谭瑞锋](https://github.com/w824449964)同学的验证码自动识别支持。
+WHU 2018级CS本科 ， [谭瑞锋](https://github.com/w824449964)同学的验证码自动识别支持。
 
 ## LICENSE： 
 
