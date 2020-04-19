@@ -46,7 +46,7 @@ class LessonArray:
             if index != length - 1:
                 target_str += (lesson.__str__() + "\n")
             else:
-                target_str += length.__str__()
+                target_str += lesson.__str__()
         return target_str
 
     def GetLessonsList(self):

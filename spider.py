@@ -5,11 +5,15 @@ __email__ = "2431297348@qq.com"
 
 import os
 import json
+import time
 import getpass
 import requests
 import argparse
+import warnings
 from bs4 import BeautifulSoup as bs
 
+# 禁止任何报错
+warnings.filterwarnings("ignore")
 # 禁止TF打印任何日志信息
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
@@ -20,6 +24,8 @@ from captcha import other
 from captcha.recognize import RecognizeCAPTCHA
 from connect.helper import HTML2CSV
 from dao.lesson import LessonArray
+
+max_try_time = 2
 
 
 def Core(args):
@@ -146,11 +152,25 @@ def Main(args):
     else:
         if not os.path.exists("./grades_table.html"):
             session = requests.session()
-
             username, password = GetUsernameAndPwd()
-            captcha, cookie = GetCAPTCHA(session)
 
-            login_cookie, csrf_token = login.Login(session, username, password, captcha, cookie)
+            # 循环登录
+            success = False
+            try_time = 0
+            while not success and try_time <= max_try_time:
+                try:
+                    try_time += 1
+                    captcha, cookie = GetCAPTCHA(session)
+                    login_cookie, csrf_token = login.Login(session, username, password, captcha, cookie)
+                    success = True
+                except:
+                    print("重试中.....")
+                    time.sleep(5)
+            if try_time > max_try_time:
+                print("\n您被退学了!")
+                print("(PS: 请去教务系统手动登录至显示'检测到您从非官方渠道登录为止')")
+                exit(0)
+
             content = GetGradePageContent(session, login_cookie, csrf_token)
             with open("grades_table.html", "w", encoding="GBK") as f:
                 f.write(content)
