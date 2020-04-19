@@ -1,5 +1,6 @@
 requests
 imutils
+Pillow
 beautifulsoup4
 opencv-python
 matplotlib
