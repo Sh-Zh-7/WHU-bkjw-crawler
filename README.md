@@ -66,7 +66,7 @@ optional arguments:
 
 下面展示比较常用的几种命令：
 
-- 查看帮助文档: `python spider.py –help`
+- 查看帮助文档: `python spider.py –-help`
 - 查看某一个课程的信息（以高等数学为例）：`python spider.py -C 高等数学`
 - 查看所有课程的GPA：`python spider.py -A -G`
 - 查看必修课的加权平均分（以学分为权）：`python spider.py -K B -W`
