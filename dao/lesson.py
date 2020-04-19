@@ -41,8 +41,12 @@ class LessonArray:
 
     def __str__(self):
         target_str = ""
-        for lesson in self.lessons:
-            target_str += (lesson.__str__() + "\n")
+        length = len(self.lessons)
+        for index, lesson in enumerate(self.lessons):
+            if index != length - 1:
+                target_str += (lesson.__str__() + "\n")
+            else:
+                target_str += length.__str__()
         return target_str
 
     def GetLessonsList(self):
