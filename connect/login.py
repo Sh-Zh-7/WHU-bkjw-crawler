@@ -91,10 +91,13 @@ def Login(session, user, pwd, captcha, cookie):
                 print("自动识别验证码错误，请重试!")
             else:
                 print(reason)
+            # 直接exit会抛出一个异常
+            raise SystemExit
+    except SystemExit:
+        exit()
     except:
         print("未知的异常！请联系开发人员!")
-    finally:
-        exit(0)
+        exit()
 
 """
 Add your login code to test,

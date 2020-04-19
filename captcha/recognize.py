@@ -45,6 +45,7 @@ def GetPrediction(model, image):
             data.append(image)
         except:
             print("自动识别验证码错误，请重试!")
+            exit(0)
     data = np.array(data, dtype="float") / 255.0
     predictions = model.predict(data)
     try:
