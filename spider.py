@@ -168,7 +168,7 @@ def Main(args):
                     time.sleep(5)
             if try_time > max_try_time:
                 print("\n您被退学了!")
-                print("(PS: 请去教务系统手动登录至显示'检测到您从非官方渠道登录为止')")
+                print("(PS: 请去教务系统手动登录至显示'检测到您从非官方渠道登录'为止)")
                 exit(0)
 
             content = GetGradePageContent(session, login_cookie, csrf_token)
