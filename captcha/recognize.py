@@ -34,14 +34,17 @@ def GetPrediction(model, image):
     x, y = CFS(image)
     SaveSmall(tmp, image, x)
     for image_file in tmp_image_list:
-        # Load the image and convert it to grayscale
-        image = cv2.imread(image_file)
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        # Resize the letter so it fits in a 30x30 pixel box
-        image = Resize2Fit(image, 30, 30)
-        # Add a third channel dimension to the image to make Keras happy
-        image = np.expand_dims(image, axis=2)
-        data.append(image)
+        try:
+            # Load the image and convert it to grayscale
+            image = cv2.imread(image_file)
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            # Resize the letter so it fits in a 30x30 pixel box
+            image = Resize2Fit(image, 30, 30)
+            # Add a third channel dimension to the image to make Keras happy
+            image = np.expand_dims(image, axis=2)
+            data.append(image)
+        except:
+            print("自动识别验证码错误，请重试!")
     data = np.array(data, dtype="float") / 255.0
     predictions = model.predict(data)
     try:

@@ -93,7 +93,8 @@ def Login(session, user, pwd, captcha, cookie):
                 print(reason)
     except:
         print("未知的异常！请联系开发人员!")
-        exit(1)
+    finally:
+        exit(0)
 
 """
 Add your login code to test,
