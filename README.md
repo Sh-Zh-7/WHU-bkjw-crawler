@@ -1,4 +1,4 @@
-# 武汉大学-本科教务-爬虫
+# 武汉大学 本科教务系统 爬虫
 
 ![](https://img.shields.io/github/license/Sh-Zh-7/WHU-bkjw-crawler) ![](https://img.shields.io/github/repo-size/Sh-Zh-7/WHU-bkjw-crawler) ![](https://img.shields.io/badge/tensroflow-2.1.0-red)
 
