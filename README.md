@@ -34,7 +34,7 @@ git clone git@github.com:Sh-Zh-7/WHU-bkjw-crawler.git
 
 2. 为了避免污染您的package库，我们强烈推荐使用虚拟环境进行安装，另外由于tensorflow较大且国内的网络问题，下载依赖可能时间比较长，这里推荐开启VPN下载：
 
-```shell
+```cmd
 ::Windows 用户
 cd WHU-bkjw-crawler
 virtualenv .env
