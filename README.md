@@ -108,7 +108,7 @@ python spider.py -Y 2018 -K B -W
 
 <br/>
 
-**Q2：如何修改用户名和密码？ **
+**Q2：如何修改用户名和密码？**  <br/>
 **A2：** 在程序要求输入用户名和密码以后，这两者都会存在user_info.json里面。如果你输错了用户名和密码，可以直接在user_info.json里面修改。或者，您可以直接执行`python spider.py --clear`删除user_info.json，并再次在进程中输入您的新用户名和密码。
 
 <br/>
