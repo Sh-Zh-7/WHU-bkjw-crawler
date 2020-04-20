@@ -108,18 +108,23 @@ python spider.py -Y 2018 -K B -W
 
 <br/>
 
-**Q2：出现了意料之外的错误怎么办？**
+**Q2：如何修改用户名和密码？ **
+**A2：** 在程序要求输入用户名和密码以后，这两者都会存在user_info.json里面。如果你输错了用户名和密码，可以直接在user_info.json里面修改。或者，您可以直接执行`python spider.py --clear`删除user_info.json，并再次在进程中输入您的新用户名和密码。
 
-**A2：** 截图，到此[链接](https://github.com/Sh-Zh-7/WHU-bkjw-crawler/issues)提issue。另外，错误可能分为两种:
+<br/>
+
+**Q3：出现了意料之外的错误怎么办？**
+
+**A3：** 截图，到此[链接](https://github.com/Sh-Zh-7/WHU-bkjw-crawler/issues)提issue。另外，错误可能分为两种:
 
 1. 第一种是登录时候的错误，这种错误可能是**网络连接或者验证码识别**的问题，**重新执行相同的命令**即可。
 2. 第二种错误是查询结果的错误，**当你发现查询结果和自己的计算不一致，请立刻联系开发人员**。
 
 <br/>
 
-**Q3: 为什么不直接爬取csv文件？而要同时爬取html和csv？**
+**Q4: 为什么不直接爬取csv文件？而要同时爬取html和csv？**
 
-**A3:** 爬取html是因为bs4的html.parser引擎性能更好。爬取csv是为了给予用户更多选择。
+**A4:** 爬取html是因为bs4的html.parser引擎性能更好。爬取csv是为了给予用户更多选择。
 
 ## 鸣谢：
 
