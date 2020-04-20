@@ -21,9 +21,7 @@
 
 0. 在进行正式的下载之前，请先确保您的电脑中拥有着较新的Python解释器（3.6以上版本均可），pip和virtualenv工具。
 
-​    pip更新和virtualenv下载：
-
-```python
+```
 python -m pip install --upgrade pip
 pip install virtualenv
 ```
@@ -34,35 +32,29 @@ pip install virtualenv
 git clone git@github.com:Sh-Zh-7/WHU-bkjw-crawler.git
 ```
 
-2. 为了避免污染您的package库，我们强烈推荐使用虚拟环境进行安装：
-
-​    Windows用户：
+2. 为了避免污染您的package库，我们强烈推荐使用虚拟环境进行安装，另外由于tensorflow较大且国内的网络问题，下载依赖可能时间比较长，这里推荐开启VPN下载：
 
 ```
+% Windows 用户 %
 cd WHU-bkjw-crawler
 virtualenv .env
 ./.env/Scripts/activate.bat
 pip install -r requirements.txt
 ```
 
-​    Linux和Mac用户：
-
 ```
+# Linux和Mac用户
 cd WHU-bkjw-crawler
 virtualenv .env
 source ./.env/bin/activate
 pip install -r requirements.txt
 ```
 
-​    另外, 由于tensorflow这个库比较庞大，加之国内的网络问题，下载可能需要很长时间，这里建议使用VPN。
-
 3. 使用完毕后别忘记退出虚拟环境：
 
 ```
 deactivate
 ```
-
-
 
 ## 使用：
 
