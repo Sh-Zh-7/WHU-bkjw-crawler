@@ -6,6 +6,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 
 from connect import helper
+from connect.helper import CaptchaException, OtherException
 from connect.url import URL
 
 
@@ -74,26 +75,22 @@ def Login(session, user, pwd, captcha, cookie):
     :param cookie: 之前访问获得的cookie
     :return: 登录后的cookie和csrf token
     """
-    try:
-        # 将密码加密后登录
-        encrypted_pwd = helper.EncryptPassword(pwd)
-        login = SendPost(user, encrypted_pwd, captcha, cookie, session=session)
-        if login.url == URL.success:
-            # 获取csrf_token和的登录后的cookie并返回
-            login_cookie = login.cookies
-            return login_cookie, GetToken(login_cookie, session=session)
+    # 将密码加密后登录
+    encrypted_pwd = helper.EncryptPassword(pwd)
+    login = SendPost(user, encrypted_pwd, captcha, cookie, session=session)
+    if login.url == URL.success:
+        # 获取csrf_token和的登录后的cookie并返回
+        login_cookie = login.cookies
+        return login_cookie, GetToken(login_cookie, session=session)
+    else:
+        failed_content = login.text
+        soup = bs(failed_content, "html.parser")
+        reason = soup.select("#loginInputBox > tr:nth-child(4) > td > font")[0].get_text()
+        if "验证码" in reason:
+            raise CaptchaException
         else:
-            failed_content = login.text
-            soup = bs(failed_content, "html.parser")
-            reason = soup.select("#loginInputBox > tr:nth-child(4) > td > font")[0].get_text()
-            print(reason)
-            # 直接exit会抛出一个异常
-            exit(0)
-    except SystemExit:
-        pass
-    except:
-        print("未知的异常！请联系开发人员!")
-        exit()
+            raise OtherException(reason)
+
 
 """
 Add your login code to test,

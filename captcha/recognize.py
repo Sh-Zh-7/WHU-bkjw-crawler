@@ -5,6 +5,7 @@ import tensorflow as tf
 from tensorflow.compat.v1 import InteractiveSession
 
 from captcha.pretreatment import *
+from connect.helper import CaptchaException
 
 tmp = "tmp"
 predict_list = []
@@ -44,8 +45,7 @@ def GetPrediction(model, image):
             image = np.expand_dims(image, axis=2)
             data.append(image)
         except:
-            print("验证码错误")
-            exit(0)
+            raise CaptchaException
     data = np.array(data, dtype="float") / 255.0
     predictions = model.predict(data)
     try:

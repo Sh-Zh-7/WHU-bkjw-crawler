@@ -15,6 +15,24 @@ time_stamp = str(int(time.time() * 1000))
 jwb = "%E6%AD%A6%E5%A4%A7%E6%9C%AC%E7%A7%91%E6%95%99%E5%8A%A1%E7%B3%BB%E7%BB%9F"
 
 
+class CaptchaException(Exception):
+    """
+    验证码错误
+    如果是验证码错误那就循环登录
+    """
+    def __init__(self):
+        pass
+
+
+class OtherException(Exception):
+    """
+    其他错误情况
+    如果是其他错误情况就直接退出
+    """
+    def __init__(self, msg):
+        self.msg = msg
+
+
 def EncryptPassword(pwd):
     """
     从教务系统的首页看

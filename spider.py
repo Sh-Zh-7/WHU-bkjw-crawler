@@ -22,7 +22,7 @@ from connect import login
 from connect.grade import GetGradePageContent
 from captcha import other
 from captcha.recognize import RecognizeCAPTCHA
-from connect.helper import HTML2CSV
+from connect.helper import HTML2CSV, CaptchaException, OtherException
 from dao.lesson import LessonArray
 
 max_try_time = 2
@@ -91,6 +91,7 @@ def GetUsernameAndPwd():
     if not os.path.exists("user_info.json"):
         username = input("请输入您的学号: ")
         password = getpass.getpass("请输入您的密码: ")
+        print()
         # 持久化
         user_info = {"username": username, "password": password}
         with open("user_info.json", "w") as f:
@@ -163,12 +164,18 @@ def Main(args):
                     captcha, cookie = GetCAPTCHA(session)
                     login_cookie, csrf_token = login.Login(session, username, password, captcha, cookie)
                     success = True
-                except:
+                except CaptchaException:
+                    print("验证码错误")
                     print("重试中.....")
                     time.sleep(5)
+                except OtherException as e:
+                    print(e.msg)
+                    # 方便用户进行重新登录
+                    if e.msg == "用户名/密码错误":
+                        os.remove("./user_info.json")
+                    exit(0)
             if try_time > max_try_time:
-                print("\n您被退学了!")
-                print("(PS: 请去教务系统手动登录至显示'检测到您从非官方渠道登录'为止)")
+                print("\n您就是非洲人? 请重试")
                 exit(0)
 
             content = GetGradePageContent(session, login_cookie, csrf_token)
